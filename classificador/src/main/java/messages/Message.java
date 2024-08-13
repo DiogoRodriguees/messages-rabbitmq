@@ -7,26 +7,8 @@ public class Message {
     public List<SpecificTopic> SpecificTopics;
 
     public Message() {}
-
     public Message(GenericTopic genericTopic, List<SpecificTopic> specificTopics) {
         this.GenericTopic = genericTopic;
-        this.SpecificTopics = specificTopics;
-    }
-
-    // Getters and Setters
-    public GenericTopic getGenericTopic() {
-        return GenericTopic;
-    }
-
-    public void setGenericTopic(GenericTopic genericTopic) {
-        this.GenericTopic = genericTopic;
-    }
-
-    public List<SpecificTopic> getSpecificTopics() {
-        return SpecificTopics;
-    }
-
-    public void setSpecificTopics(List<SpecificTopic> specificTopics) {
         this.SpecificTopics = specificTopics;
     }
 
