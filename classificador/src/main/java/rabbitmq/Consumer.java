@@ -1,14 +1,14 @@
 package rabbitmq;
 
+import java.io.IOException;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
+
 import messages.Message;
-
-import java.io.IOException;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import messages.SpecificTopic;
 
 public class Consumer {
@@ -16,11 +16,11 @@ public class Consumer {
 
     public void execute() {
         try {
-             ObjectMapper objectMapper = new ObjectMapper(); // Inicialize o ObjectMapper
+            ObjectMapper objectMapper = new ObjectMapper(); // Inicialize o ObjectMapper
             System.out.println("Starting connection");
-//             Configurar a conexão com o RabbitMQ
+            // Configurar a conexão com o RabbitMQ
             ConnectionFactory factory = new ConnectionFactory();
-            factory.setHost("localhost");
+            factory.setHost("rabbitmq");
             Connection connection = factory.newConnection();
             Channel channel = connection.createChannel();
 
@@ -35,9 +35,9 @@ public class Consumer {
                 try {
                     // Desserializar o JSON para um objeto messages.Message
                     Message message = objectMapper.readValue(messageBody, Message.class);
-//                    System.out.println(" [x] Received '" + message + "'");
+                    // System.out.println(" [x] Received '" + message + "'");
                     System.out.println("Topic:" + message.GenericTopic.Name);
-                    for (int i = 0; i< message.SpecificTopics.size(); i++) {
+                    for (int i = 0; i < message.SpecificTopics.size(); i++) {
                         this.sendTopic(message.SpecificTopics.get(i));
                     }
 
@@ -46,15 +46,16 @@ public class Consumer {
                 }
             };
             // Consumir mensagens da fila
-            channel.basicConsume(QUEUE_NAME, true, deliverCallback, consumerTag -> { });
-        } catch(Exception e) {
+            channel.basicConsume(QUEUE_NAME, true, deliverCallback, consumerTag -> {
+            });
+        } catch (Exception e) {
             System.out.println("Deu ruim");
 
         }
     }
 
     public void sendTopic(SpecificTopic specificTopic) {
-        try{
+        try {
             ConnectionFactory factory = new ConnectionFactory();
             factory.setHost("localhost");
             Connection connection = factory.newConnection();
@@ -66,8 +67,8 @@ public class Consumer {
 
             channel.basicPublish("", specificTopic.Name, null, msg);
             System.out.println(" [x] Sent '" + specificTopic.Name + "'");
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Deu ruim");
         }
-   }
+    }
 }

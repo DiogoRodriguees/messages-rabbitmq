@@ -20,7 +20,7 @@ class RabbitMQ:
 
     def consume_messages(self):
         # Conectar ao RabbitMQ
-        connection = pika.BlockingConnection(pika.ConnectionParameters("localhost"))
+        connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq"))
         channel = connection.channel()
 
         # Declarar a fila de onde vamos consumir as mensagens

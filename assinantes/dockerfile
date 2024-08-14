@@ -1,0 +1,17 @@
+# Usar uma imagem base do Python
+FROM python:3.11-slim
+
+# Definir o diretório de trabalho dentro do container
+WORKDIR /app
+
+# Copiar o arquivo de requisitos para o container
+COPY ./src/requirements.txt .
+
+# Instalar as dependências listadas no requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiar o código da aplicação para o diretório de trabalho dentro do container
+COPY ./src .
+
+# Comando para executar o consumidor de mensagens quando o container iniciar
+CMD ["python3", "Main.py"]

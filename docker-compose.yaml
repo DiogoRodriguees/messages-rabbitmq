@@ -1,6 +1,67 @@
+networks:
+    tweets-consumer-network:
+        driver: bridge
+
 services:
     rabbitmq:
         image: "rabbitmq:3-management"
+        hostname: rabbitmq
+        privileged: true
         ports:
             - "5672:5672"
             - "15672:15672"
+        deploy:
+            resources:
+                limits:
+                    memory: 100M
+        networks:
+            - tweets-consumer-network
+
+    classificador:
+        build:
+            context: ./classificador
+            dockerfile: dockerfile
+        restart: always
+        deploy:
+            replicas: 2
+            resources:
+                limits:
+                    memory: 100M
+        depends_on:
+            - rabbitmq
+            - coletor
+        networks:
+            - tweets-consumer-network
+
+    assinantes:
+        build:
+            context: ./assinantes
+            dockerfile: dockerfile
+        restart: always
+        deploy:
+            replicas: 2
+            resources:
+                limits:
+                    memory: 100M
+        depends_on:
+            - rabbitmq
+            - coletor
+            - classificador
+        networks:
+            - tweets-consumer-network
+
+    coletor:
+        build:
+            context: ./coletor
+            dockerfile: dockerfile
+        hostname: coletor
+        depends_on:
+            - rabbitmq
+        restart: always
+        deploy:
+            replicas: 2
+            resources:
+                limits:
+                    memory: 100M
+        networks:
+            - tweets-consumer-network
