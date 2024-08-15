@@ -13,7 +13,7 @@ services:
         deploy:
             resources:
                 limits:
-                    memory: 100M
+                    memory: 200M
         networks:
             - tweets-consumer-network
 
@@ -23,7 +23,7 @@ services:
             dockerfile: dockerfile
         restart: always
         deploy:
-            replicas: 2
+            replicas: 1
             resources:
                 limits:
                     memory: 100M
@@ -39,7 +39,7 @@ services:
             dockerfile: dockerfile
         restart: always
         deploy:
-            replicas: 2
+            replicas: 1
             resources:
                 limits:
                     memory: 100M
@@ -59,7 +59,7 @@ services:
             - rabbitmq
         restart: always
         deploy:
-            replicas: 2
+            replicas: 1
             resources:
                 limits:
                     memory: 100M
