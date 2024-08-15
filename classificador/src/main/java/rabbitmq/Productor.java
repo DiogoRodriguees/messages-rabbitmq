@@ -10,8 +10,8 @@ public class Productor {
             ObjectMapper objectMapper = new ObjectMapper();
             byte[] msg = objectMapper.writeValueAsBytes(specificTopic);
 
-            channel.basicPublish("", Queue.topics, null, msg);
-            System.out.println(" * Sent '" + specificTopic.Name + "'");
+            channel.basicPublish("topic_" + specificTopic.Name.toLowerCase().replace(" ", "_"), specificTopic.Name.split("_")[0], null, msg);
+            System.out.println(" * Sent '" + "topic_" + specificTopic.Name.toLowerCase().replace(" ", "_") + "'");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("[Send Topic] Exception: " + e.getMessage());

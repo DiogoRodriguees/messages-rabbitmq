@@ -10,7 +10,7 @@ COPY src /app/src
 
 # Execute o Maven para construir o projeto (assumindo que você tem o Maven configurado no projeto)
 RUN apt-get update && apt-get install -y maven
-RUN mvn clean package -DskipTests
+# RUN mvn clean package -DskipTests
 
 RUN mvn compile
 CMD ["mvn" ,"exec:java", "-Dexec.mainClass=Main"]
