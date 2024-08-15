@@ -11,12 +11,4 @@ public class Tweet {
         this.Topic = genericTopic;
         this.SpecificTopics = specificTopics;
     }
-
-    @Override
-    public String toString() {
-        return "messages.Message{" +
-                "messages.GenericTopic=" + Topic +
-                ", SpecificTopics=" + SpecificTopics +
-                '}';
-    }
 }

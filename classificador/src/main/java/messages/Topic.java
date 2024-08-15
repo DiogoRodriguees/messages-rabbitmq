@@ -7,11 +7,4 @@ public class Topic {
     public Topic(String name) {
         this.Name = name;
     }
-
-    @Override
-    public String toString() {
-        return "messages.GenericTopic{" +
-                "name='" + Name + '\'' +
-                '}';
-    }
 }

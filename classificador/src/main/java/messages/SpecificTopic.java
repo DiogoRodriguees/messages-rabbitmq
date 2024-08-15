@@ -7,11 +7,4 @@ public class SpecificTopic {
     public SpecificTopic(String name) {
         this.Name = name;
     }
-
-    @Override
-    public String toString() {
-        return "messages.SpecificTopic{" +
-                "name='" + Name + '\'' +
-                '}';
-    }
 }
