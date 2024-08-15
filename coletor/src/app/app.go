@@ -34,7 +34,7 @@ func createSchedulers(ch *amqp.Channel) {
 				panic("Failed o marsahl json")
 			}
 
-			fmt.Println("Send message with topic: ", message.GenericTopic.Name)
+			fmt.Println("Send message with topic: ", message.Topic.Name)
 
 			err = rabbitmq.PublishMessage(ch, rabbitmq.QueueName, msg)
 			if err != nil {

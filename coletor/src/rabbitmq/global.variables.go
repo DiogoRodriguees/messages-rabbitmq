@@ -1,8 +1,8 @@
 package rabbitmq
 
-var Messages = []Message{
+var Messages = []Tweet{
 	{
-		GenericTopic: GenericTopic{
+		Topic: Topic{
 			Name: "Esportes",
 		},
 		SpecificTopics: []SpecificTopic{
@@ -11,7 +11,7 @@ var Messages = []Message{
 		},
 	},
 	{
-		GenericTopic: GenericTopic{
+		Topic: Topic{
 			Name: "Esportes",
 		},
 		SpecificTopics: []SpecificTopic{
@@ -20,7 +20,7 @@ var Messages = []Message{
 		},
 	},
 	{
-		GenericTopic: GenericTopic{
+		Topic: Topic{
 			Name: "Financas",
 		},
 		SpecificTopics: []SpecificTopic{
@@ -29,7 +29,7 @@ var Messages = []Message{
 		},
 	},
 	{
-		GenericTopic: GenericTopic{
+		Topic: Topic{
 			Name: "Noticias",
 		},
 		SpecificTopics: []SpecificTopic{

@@ -26,11 +26,6 @@ func (s *Scheduler) Run() {
 	s.Scheduler.Start()
 }
 
-func (s *Scheduler) Stop() {
-	log.Println("Stopping task: ")
-	defer s.Scheduler.Stop()
-}
-
 func (s *Scheduler) Configure(interval time.Duration) {
 	newScheduler := scheduler.New(s.TaskStore)
 	newScheduler.RunEvery(interval, s.Task)

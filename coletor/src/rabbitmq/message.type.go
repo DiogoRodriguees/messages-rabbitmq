@@ -4,11 +4,11 @@ type SpecificTopic struct {
 	Name string
 }
 
-type GenericTopic struct {
+type Topic struct {
 	Name string
 }
 
-type Message struct {
-	GenericTopic   GenericTopic
+type Tweet struct {
+	Topic          Topic
 	SpecificTopics []SpecificTopic
 }
