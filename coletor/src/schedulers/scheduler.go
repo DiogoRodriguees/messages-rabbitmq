@@ -4,7 +4,7 @@ import "time"
 
 func Create(task func()) *Scheduler {
 	scheduler := New(task)
-	scheduler.Configure(5 * time.Second)
+	scheduler.Configure(10 * time.Second)
 	return scheduler
 }
 

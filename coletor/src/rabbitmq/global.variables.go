@@ -34,7 +34,7 @@ var Messages = []Tweet{
 		},
 		SpecificTopics: []SpecificTopic{
 			{Name: "Politica"},
-			{Name: "Educação"},
+			{Name: "Educacao"},
 		},
 	},
 }
