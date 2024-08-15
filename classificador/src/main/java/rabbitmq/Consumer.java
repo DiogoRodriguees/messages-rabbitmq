@@ -8,11 +8,11 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
 
-import messages.Message;
+import messages.Tweet;
 import messages.SpecificTopic;
 
 public class Consumer {
-    private final static String QUEUE_NAME = "hello";
+    private final static String tweets_queue = "tweets";
 
     public void execute() {
         try {
@@ -20,12 +20,12 @@ public class Consumer {
             System.out.println("Starting connection");
             // Configurar a conexão com o RabbitMQ
             ConnectionFactory factory = new ConnectionFactory();
-            factory.setHost("rabbitmq");
+            factory.setHost("localhost");
             Connection connection = factory.newConnection();
             Channel channel = connection.createChannel();
 
             // Declarar a fila de onde vamos consumir as mensagens
-            channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+//            channel.queueDeclare(tweets_queue, false, false, false, null);
             System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 
             // Definir o callback que será executado quando uma mensagem for recebida
@@ -34,22 +34,24 @@ public class Consumer {
 
                 try {
                     // Desserializar o JSON para um objeto messages.Message
-                    Message message = objectMapper.readValue(messageBody, Message.class);
+                    Tweet message = objectMapper.readValue(messageBody, Tweet.class);
                     // System.out.println(" [x] Received '" + message + "'");
-                    System.out.println("Topic:" + message.GenericTopic.Name);
+                    System.out.println("Topic:" + message.Topic.Name);
                     for (int i = 0; i < message.SpecificTopics.size(); i++) {
                         this.sendTopic(message.SpecificTopics.get(i));
                     }
 
                 } catch (IOException e) {
+                    e.printStackTrace();
                     System.err.println("Failed to deserialize message: " + e.getMessage());
                 }
             };
             // Consumir mensagens da fila
-            channel.basicConsume(QUEUE_NAME, true, deliverCallback, consumerTag -> {
+            channel.basicConsume(tweets_queue, true, deliverCallback, consumerTag -> {
             });
         } catch (Exception e) {
-            System.out.println("Deu ruim");
+            e.printStackTrace();
+            System.out.println("Consumer catch: " + e.getMessage());
 
         }
     }
