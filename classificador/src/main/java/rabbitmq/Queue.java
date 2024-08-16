@@ -16,9 +16,9 @@ public class Queue {
         return topicName.replace(" ", "_").toLowerCase();
     }
 
-    public static void declaeeAllQueues(Channel channel, String[] exchanges) throws IOException {
+    public static void declareAllExchanges(Channel channel, String[] exchanges) throws IOException {
         for (String exchange : exchanges) {
-            channel.exchangeDeclare(exchange, "fanout");
+            channel.exchangeDeclare(exchange, "direct");
         }
     }
 }

@@ -7,7 +7,7 @@ import dtos.Topic;
 
 public class Productor {
     // send broadcast to all consumers connects on exchange
-    public static void broadcast(Topic topic, SpecificTopic specificTopic, Channel channel) {
+    public static void broadcast(SpecificTopic specificTopic, Channel channel) {
         try {
             // convert specific topic to bytes (type used to transmit message on rabbitmq)
             ObjectMapper objectMapper = new ObjectMapper();
@@ -19,7 +19,7 @@ public class Productor {
 
             // publishing message to routing key "queue"
             channel.basicPublish(exchange, routingKey, null, msg);
-            System.out.println(" * Sent '" + routingKey + "'");
+            System.out.println(" * Sent " +exchange + ": " + routingKey);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("[Send Topic] Exception: " + e.getMessage());

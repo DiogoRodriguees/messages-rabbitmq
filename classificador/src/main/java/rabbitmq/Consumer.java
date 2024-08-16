@@ -26,7 +26,7 @@ public class Consumer {
 
             // generate broadcast by specific topic
             for (SpecificTopic specificTopic : tweet.SpecificTopics) {
-                Productor.broadcast(tweet.Topic, specificTopic, channel);
+                Productor.broadcast(specificTopic, channel);
             }
         };
     }

@@ -10,7 +10,7 @@ public class Main {
         Channel channel = RabbitMQManager.createChannel("localhost");
 
         // declare queue names on rabbitmq server
-        Queue.declaeeAllQueues(channel, Queue.names);
+        Queue.declareAllExchanges(channel, Queue.names);
 
         // consuming queue tweets
         Consumer.execute(channel, Queue.tweets);

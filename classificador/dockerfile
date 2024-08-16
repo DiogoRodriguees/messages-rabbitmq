@@ -1,21 +1,15 @@
-# Use a imagem base do OpenJDK 17
 FROM openjdk:17-jdk-slim
 
-# Defina o diretório de trabalho dentro do contêiner
 WORKDIR /app
 
-# Copie o arquivo pom.xml e as dependências do Maven
 COPY pom.xml /app/
 COPY src /app/src
 
-# Execute o Maven para construir o projeto (assumindo que você tem o Maven configurado no projeto)
 RUN apt-get update && apt-get install -y maven
 # RUN mvn clean package -DskipTests
 
 RUN mvn compile
 CMD ["mvn" ,"exec:java", "-Dexec.mainClass=Main"]
-# Após o build, copie o JAR gerado para o diretório atual
+
 # RUN mv target/*.jar classificador-1.0-SNAPSHOT.jar
-#
-# # Define o comando padrão para rodar a aplicação
 # CMD ["java", "-jar", "classificador-1.0-SNAPSHOT.jar"]
