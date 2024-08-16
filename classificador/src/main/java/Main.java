@@ -1,25 +1,18 @@
 import com.rabbitmq.client.Channel;
 
 import rabbitmq.Consumer;
+import rabbitmq.Queue;
 import rabbitmq.RabbitMQManager;
 
 public class Main {
     public static void main(String[] argv) throws Exception {
-        String[] queues = { "futebol",
-                "volei",
-                "tenis",
-                "basquete",
-                "mercado_imobiliario",
-                "bolsa_de_valores",
-                "politica",
-                "educacao",
-        };
+        // create connection and return channel
         Channel channel = RabbitMQManager.createChannel("localhost");
 
-        for (int i = 0; i < queues.length; i++) {
-            channel.exchangeDeclare("topic_" + queues[i], "fanout");
-        }
+        // declare queue names on rabbitmq server
+        Queue.declaeeAllQueues(channel, Queue.names);
 
-        Consumer.execute(channel);
+        // consuming queue tweets
+        Consumer.execute(channel, Queue.tweets);
     }
 }

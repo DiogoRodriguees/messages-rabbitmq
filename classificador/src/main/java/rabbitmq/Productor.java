@@ -2,16 +2,24 @@ package rabbitmq;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.Channel;
-import messages.SpecificTopic;
+import dtos.SpecificTopic;
+import dtos.Topic;
 
 public class Productor {
-    public static void sendTopic(SpecificTopic specificTopic, Channel channel) {
+    // send broadcast to all consumers connects on exchange
+    public static void broadcast(Topic topic, SpecificTopic specificTopic, Channel channel) {
         try {
+            // convert specific topic to bytes (type used to transmit message on rabbitmq)
             ObjectMapper objectMapper = new ObjectMapper();
             byte[] msg = objectMapper.writeValueAsBytes(specificTopic);
 
-            channel.basicPublish("topic_" + specificTopic.Name.toLowerCase().replace(" ", "_"), specificTopic.Name.split("_")[0], null, msg);
-            System.out.println(" * Sent '" + "topic_" + specificTopic.Name.toLowerCase().replace(" ", "_") + "'");
+            // format exchange and queue name
+            String exchange = Queue.formatExchangeName(specificTopic.Name);
+            String routingKey = Queue.formatRoutingKeyName(specificTopic.Name);
+
+            // publishing message to routing key "queue"
+            channel.basicPublish(exchange, routingKey, null, msg);
+            System.out.println(" * Sent '" + routingKey + "'");
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("[Send Topic] Exception: " + e.getMessage());

@@ -1,4 +1,4 @@
-package messages;
+package dtos;
 
 import java.util.List;
 

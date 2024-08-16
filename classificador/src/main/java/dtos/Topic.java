@@ -1,4 +1,4 @@
-package messages;
+package dtos;
 
 public class Topic {
     public String Name;

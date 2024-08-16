@@ -12,6 +12,6 @@ public class RabbitMQManager {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost(host);
         Connection connection = factory.newConnection();
-       return connection.createChannel();
+        return connection.createChannel();
     }
 }

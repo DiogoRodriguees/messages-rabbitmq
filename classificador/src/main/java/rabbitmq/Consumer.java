@@ -6,31 +6,38 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.DeliverCallback;
 
-import messages.Tweet;
+import dtos.SpecificTopic;
+import dtos.Tweet;
 
 public class Consumer {
 
-    public static void execute(Channel channel) throws IOException {
+    // callback function used by rabbitmq
+    public static DeliverCallback deliveryCallBack(Channel channel) {
+        // mapper to convert objet message to tweet class
         ObjectMapper objectMapper = new ObjectMapper();
 
-        DeliverCallback deliverCallback = (consumerTag, delivery) -> {
+        return (consumerTag, delivery) -> {
+            // read message
             String messageBody = new String(delivery.getBody(), "UTF-8");
 
-            try {
-                Tweet tweet = objectMapper.readValue(messageBody, Tweet.class);
-                System.out.println("Topic:" + tweet.Topic.Name);
+            // convert message to tweet class
+            Tweet tweet = objectMapper.readValue(messageBody, Tweet.class);
+            System.out.println("Topic:" + tweet.Topic.Name);
 
-                for (int i = 0; i < tweet.SpecificTopics.size(); i++) {
-                    Productor.sendTopic(tweet.SpecificTopics.get(i), channel);
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.err.println("Failed to deserialize message: " + e.getMessage());
+            // generate broadcast by specific topic
+            for (SpecificTopic specificTopic : tweet.SpecificTopics) {
+                Productor.broadcast(tweet.Topic, specificTopic, channel);
             }
         };
+    }
 
-        channel.basicConsume(Queue.tweets, true, deliverCallback, consumerTag -> {
+    // run consumer
+    public static void execute(Channel channel, String queue) throws IOException {
+        // callback function called when receive message
+        DeliverCallback deliverCallback = Consumer.deliveryCallBack(channel);
+
+        // configure queue to consume
+        channel.basicConsume(queue, true, deliverCallback, consumerTag -> {
         });
     }
 }
