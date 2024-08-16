@@ -16,7 +16,7 @@
     $ pip install --no-cache-dir -r requirements.txt
 
     # running
-    $ python3 Main.py
+    $ python3 Main.py <exchange_name>:<topic_separated_by_comma>,<topic_separated_by_comma>
 ```
 
 ### Usando Docker
