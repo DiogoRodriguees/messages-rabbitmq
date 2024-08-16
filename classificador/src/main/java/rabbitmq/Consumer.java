@@ -26,7 +26,9 @@ public class Consumer {
 
             // generate broadcast by specific topic
             for (SpecificTopic specificTopic : tweet.SpecificTopics) {
-                Productor.broadcast(specificTopic, channel);
+                String exchange = Exchange.formatName(tweet.Topic.Name);
+                String routingKey = Exchange.formatRoutingKeyName(specificTopic.Name);
+                Productor.broadcast(exchange, routingKey, specificTopic, channel);
             }
         };
     }

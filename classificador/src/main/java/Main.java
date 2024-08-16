@@ -1,6 +1,7 @@
 import com.rabbitmq.client.Channel;
 
 import rabbitmq.Consumer;
+import rabbitmq.Exchange;
 import rabbitmq.Queue;
 import rabbitmq.RabbitMQManager;
 
@@ -10,7 +11,7 @@ public class Main {
         Channel channel = RabbitMQManager.createChannel("localhost");
 
         // declare queue names on rabbitmq server
-        Queue.declareAllExchanges(channel, Queue.names);
+        Exchange.declareMany(channel, Exchange.names);
 
         // consuming queue tweets
         Consumer.execute(channel, Queue.tweets);
