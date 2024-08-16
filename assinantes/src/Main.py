@@ -3,13 +3,17 @@ import sys
 
 
 amount_params = sys.argv.__len__()
-print("amount_params: ", amount_params)
 
 sys.argv.pop(0)
-print("params: ", sys.argv)
 params = list(sys.argv)
+
 if amount_params > 1:
-    rabbitmq = RabbitMQ()
-    rabbitmq.consume_messages(params)
+    for param in params:
+        param_splited = param.split(":")
+        exchange = param_splited[0]
+        routing_keys = param_splited[1].split(",")
+
+        rabbitmq = RabbitMQ()
+        rabbitmq.consume_messages(exchange, routing_keys)
 else:
     print("Amount params invalid")

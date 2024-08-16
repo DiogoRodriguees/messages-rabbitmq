@@ -20,24 +20,21 @@ def callback(ch, method, properties, body):
 
 class RabbitMQ:
 
-    def consume_messages(self, queue_names):
+    def consume_messages(self, exchange, routing_keys):
+        print(" [*] Waiting for messages. To exit press CTRL+C")
 
         # Conectar ao RabbitMQ
-        connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host="localhost")
-        )
-        channel = connection.channel()
+        conn = pika.BlockingConnection(pika.ConnectionParameters(host="localhost"))
+        channel = conn.channel()
 
         # Declarar a fila de onde vamos consumir as mensagens
-        for routing_key in queue_names:
+        for routing_key in routing_keys:
             result = channel.queue_declare(queue="", exclusive=True)
-            queue_name = result.method.queue
+            queue = result.method.queue
 
-            print(" [*] Waiting for messages. To exit press CTRL+C")
-            channel.queue_bind(
-                queue=queue_name, exchange=routing_key, routing_key=routing_key
-            )
-            channel.basic_consume(queue=queue_name, on_message_callback=callback)
+            print(f"Connecting(exchange:routing_key) {exchange}:{routing_key}")
+            channel.queue_bind(queue=queue, exchange=exchange, routing_key=routing_key)
+            channel.basic_consume(queue=queue, on_message_callback=callback)
 
         # Iniciar o consumo de mensagens
         channel.start_consuming()
