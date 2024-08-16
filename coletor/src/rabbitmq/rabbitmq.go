@@ -15,7 +15,7 @@ func failOnError(err error, msg string) {
 	}
 }
 
-func ConnectToRabbitMQ(rabbitMQUrl string) (*amqp.Channel, *amqp.Connection) {
+func Connect(rabbitMQUrl string) (*amqp.Channel, *amqp.Connection) {
 	conn, err := amqp.Dial(rabbitMQUrl)
 	failOnError(err, "Failed to connect to RabbitMQ")
 

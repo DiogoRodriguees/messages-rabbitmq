@@ -13,7 +13,7 @@ import (
 
 func Run() {
 	log.Println("Starting colector application ...")
-	ch, conn := rabbitmq.ConnectToRabbitMQ(rabbitmq.RabbitMQUrl)
+	ch, conn := rabbitmq.Connect(rabbitmq.RabbitMQUrl)
 
 	defer conn.Close()
 	defer ch.Close()
