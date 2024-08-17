@@ -3,7 +3,6 @@ import sys
 
 
 amount_params = sys.argv.__len__()
-
 sys.argv.pop(0)
 params = list(sys.argv)
 
