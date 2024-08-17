@@ -15,7 +15,7 @@
     # install dependencies
     $ pip install --no-cache-dir -r requirements.txt
 
-    # running
+    # running ex: python3 Main.py esportes:volei,futebol noticias:educacao
     $ python3 Main.py <exchange_name>:<topic_separated_by_comma>,<topic_separated_by_comma>
 ```
 
@@ -26,5 +26,5 @@
     $ docker build -t assinantes .
 
     # creating container
-    $ docker run --name assinantes-app assinantes
+    $ docker run --network <your-network> --name assinantes-app assinantes arg1 arg2 ...
 ```

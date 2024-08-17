@@ -8,14 +8,21 @@
 
 ## Como executar
 
-### Subindo servidor RabbitMQ
+<!-- ### Subindo servidor RabbitMQ
 
 ```bash
     # creating container rabbitmq n background (-d)
-    $ docker run -d --hostname rabbitmq --name rabbitmq rabbitmq:3
-```
+    $ docker run -d --hostname rabbitmq --name rabbitmq rabbitmq:3 -->
+<!-- ``` -->
 
 ### Executando cada parte separada
+
+Executando um servidor rabbitmq:
+
+```bash
+    # creating container rabbitmq
+    $ docker run -d --hostname rabbitmq --name rabbitmq rabbitmq:3-management
+```
 
 Lembre de trocar os hosts na conexão com o servidor rabbitmq para localhost (Atualmente ta sendo utilizado rabbitmq por causa do container)
 
@@ -23,9 +30,15 @@ Lembre de trocar os hosts na conexão com o servidor rabbitmq para localhost (At
 -   [Classificador](./classificador/readme.md#como-executar)
 -   [Coletor](./coletor/readme.md#como-executar)
 
-### Executando aplicação inteira com Docker Compose
+### Executando com Docker Compose
 
 ```bash
-    # up containers with docker compose
+    # up  server rabbitmq, coletor e 2 classificadores
     $ docker compose up --build
+
+    # entry on assinantes folder
+    $ cd ./assinantes/src
+
+    # up assinantes ex: python3 Main.py esportes:volei,futebol noticias:educacao
+    $ python3 Main.py <string-pra-assinar-um-topic>
 ```
