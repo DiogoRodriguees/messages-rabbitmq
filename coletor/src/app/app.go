@@ -13,7 +13,7 @@ import (
 
 func Run() {
 	log.Println("Starting colector application ...")
-	ch, conn := rabbitmq.ConnectToRabbitMQ(rabbitmq.RabbitMQUrl)
+	ch, conn := rabbitmq.Connect(rabbitmq.RabbitMQUrl)
 
 	defer conn.Close()
 	defer ch.Close()
@@ -34,7 +34,7 @@ func createSchedulers(ch *amqp.Channel) {
 				panic("Failed o marsahl json")
 			}
 
-			fmt.Println("Send message with topic: ", message.GenericTopic.Name)
+			fmt.Println("Send message with topic: ", message.Topic.Name)
 
 			err = rabbitmq.PublishMessage(ch, rabbitmq.QueueName, msg)
 			if err != nil {

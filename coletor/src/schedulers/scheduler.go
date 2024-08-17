@@ -13,11 +13,3 @@ func RunMany(schedulers []*Scheduler) {
 		scheduler.Run()
 	}
 }
-
-func CreateMany(tasks []func()) []*Scheduler {
-	var schedulerList []*Scheduler
-	for _, task := range tasks {
-		schedulerList = append(schedulerList, Create(task))
-	}
-	return schedulerList
-}
