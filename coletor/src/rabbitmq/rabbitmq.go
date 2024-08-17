@@ -6,7 +6,7 @@ import (
 	"github.com/streadway/amqp"
 )
 
-var RabbitMQUrl = "amqp://guest:guest@localhost:5672/"
+var RabbitMQUrl = "amqp://guest:guest@rabbitmq:5672/"
 var QueueName = "tweets"
 
 func failOnError(err error, msg string) {
