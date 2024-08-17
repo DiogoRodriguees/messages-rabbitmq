@@ -6,10 +6,11 @@ COPY pom.xml /app/
 COPY src /app/src
 
 RUN apt-get update && apt-get install -y maven
-# RUN mvn clean package -DskipTests
+RUN mvn clean package 
 
 RUN mvn compile
 CMD ["mvn" ,"exec:java", "-Dexec.mainClass=Main"]
+
 
 # RUN mv target/*.jar classificador-1.0-SNAPSHOT.jar
 # CMD ["java", "-jar", "classificador-1.0-SNAPSHOT.jar"]
