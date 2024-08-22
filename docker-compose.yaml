@@ -4,7 +4,7 @@ networks:
 
 services:
     rabbitmq:
-        image: "rabbitmq:3-management"
+        image: "diogorodriguees/comunicacao-indireta:rabbitmq"
         hostname: rabbitmq
         privileged: true
         ports:
