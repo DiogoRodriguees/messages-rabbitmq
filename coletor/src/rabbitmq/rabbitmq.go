@@ -6,7 +6,7 @@ import (
 	"github.com/streadway/amqp"
 )
 
-var RabbitMQUrl = "amqp://guest:guest@rabbitmq:5672/"
+var RabbitMQUrl = "amqp://guest:guest@localhost:5672/"
 var QueueName = "tweets"
 
 func failOnError(err error, msg string) {
@@ -15,8 +15,9 @@ func failOnError(err error, msg string) {
 	}
 }
 
-func Connect(rabbitMQUrl string) (*amqp.Channel, *amqp.Connection) {
-	conn, err := amqp.Dial(rabbitMQUrl)
+// @param
+func Connect(url string) (*amqp.Channel, *amqp.Connection) {
+	conn, err := amqp.Dial(url)
 	failOnError(err, "Failed to connect to RabbitMQ")
 
 	ch, err := conn.Channel()
@@ -28,7 +29,7 @@ func Connect(rabbitMQUrl string) (*amqp.Channel, *amqp.Connection) {
 func CreateQueue(ch *amqp.Channel, queueName string) {
 	_, err := ch.QueueDeclare(
 		queueName, // name
-		true,      // durable
+		false,     // durable: quando true, mantém a fila caso o RabbitMQ seja reiniciado
 		false,     // delete when unused
 		false,     // exclusive
 		false,     // no-wait
@@ -41,11 +42,12 @@ func PublishMessage(ch *amqp.Channel, queueName string, tweet []byte) error {
 	err := ch.Publish(
 		"",        // exchange
 		queueName, // routing key
-		false,     // mandatory
-		false,     // immediate
-		amqp.Publishing{
-			ContentType: "text/plain",
-			Body:        tweet,
+		false,     // mandatory: quando true, retorna a msg ao produtor caso não exist filas vinculadas
+		false,     // immediate: quando true, entrega para o primeiro consumidor disponivel. Retorna error se não tiver consymidor disponivel
+		amqp.Publishing{ // messagem
+			ContentType:  "text/plain",
+			Body:         tweet,
+			DeliveryMode: amqp.Persistent, // Armazena a messagem no disco, fica disponivel caso RabbitMQ seja reiniciado
 		})
 	return err
 }
