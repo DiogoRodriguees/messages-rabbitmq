@@ -11,7 +11,10 @@ import dtos.Tweet;
 
 public class Consumer {
 
-    // callback function used by rabbitmq
+    /**
+     * @param channel rabbitmq connection
+     * @return callback function to execute when to listen message
+     */
     public static DeliverCallback deliveryCallBack(Channel channel) {
         // mapper to convert objet message to tweet class
         ObjectMapper objectMapper = new ObjectMapper();
@@ -20,20 +23,26 @@ public class Consumer {
             // read message
             String messageBody = new String(delivery.getBody(), "UTF-8");
 
-            // convert message to tweet class
+            // convert message to Twwet class
             Tweet tweet = objectMapper.readValue(messageBody, Tweet.class);
             System.out.println("Topic:" + tweet.Topic.Name);
 
             // generate broadcast by specific topic
             for (SpecificTopic specificTopic : tweet.SpecificTopics) {
                 String exchange = Exchange.formatName(tweet.Topic.Name);
-                String routingKey = Exchange.formatRoutingKeyName(specificTopic.Name);
+                String routingKey = Exchange.formatName(specificTopic.Name);
                 Productor.broadcast(exchange, routingKey, specificTopic, channel);
             }
         };
     }
 
-    // run consumer
+    /**
+     * Set consumer on rabbitmq channel
+     * 
+     * @param channel channel connection with rabbitmq
+     * @param queue   name queue to connect to listenning
+     * @throws IOException
+     */
     public static void execute(Channel channel, String queue) throws IOException {
         // callback function called when receive message
         DeliverCallback deliverCallback = Consumer.deliveryCallBack(channel);
