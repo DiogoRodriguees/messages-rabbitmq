@@ -1,3 +1,7 @@
+/*
+Descrição: funções para auxiliar a criação
+e uso dos agendamentos
+*/
 package schedulers
 
 import (

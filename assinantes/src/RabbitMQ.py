@@ -1,3 +1,8 @@
+# RabbitMQ
+# Descrição: Responsavel por comunicação com rabbitmq
+# criando: messagens, filas, funções de callback
+# e inscrevendo os assinantes nas exchanges
+
 from SpecificTopic import SpecificTopic
 import pika
 import json

@@ -1,0 +1,7 @@
+FROM rabbitmq:3-management
+
+ENV HOSTNAME rabbitmq
+
+EXPOSE 5672 15672
+
+CMD [ "rabbitmq-server" ]

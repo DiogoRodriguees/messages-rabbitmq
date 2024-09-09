@@ -1,3 +1,8 @@
+/* 
+ * Descrição: cria comunicação com rabbitmq;
+ * declara exchanges que serão usadas; inicia o consumidor
+ */
+
 import com.rabbitmq.client.Channel;
 
 import rabbitmq.Consumer;
@@ -7,13 +12,13 @@ import rabbitmq.RabbitMQManager;
 
 public class Main {
     public static void main(String[] argv) throws Exception {
-        // create connection and return channel
+        // create connection and get channel
         Channel channel = RabbitMQManager.createChannel("rabbitmq");
 
-        // declare queue names on rabbitmq server
+        // declare queue names at rabbitmq server
         Exchange.declareMany(channel, Exchange.names);
 
-        // consuming queue tweets
+        // run consumer
         Consumer.execute(channel, Queue.tweets);
     }
 }
