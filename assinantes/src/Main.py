@@ -1,3 +1,7 @@
+# Main
+# Descrição: Responsavel por receber uma entrada de texto
+# e formatar para assinar uma fila de messagem
+
 from RabbitMQ import RabbitMQ
 import sys
 

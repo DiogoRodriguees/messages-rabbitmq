@@ -1,3 +1,6 @@
+/*
+Descrição: responsavel por criar agendamentos e executalos
+*/
 package schedulers
 
 import "time"

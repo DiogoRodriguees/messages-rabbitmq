@@ -1,3 +1,7 @@
+/* 
+ * Descrição: responsavel pela implementação de metodos 
+ * de consumidores do rabbitmq
+ */
 package rabbitmq;
 
 import java.io.IOException;

@@ -1,7 +1,12 @@
+/* 
+ * Descrição: responsavel pela implementação de metodos 
+ * de produtores do rabbitmq
+ */
 package rabbitmq;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.Channel;
+
 import dtos.SpecificTopic;
 
 public class Productor {

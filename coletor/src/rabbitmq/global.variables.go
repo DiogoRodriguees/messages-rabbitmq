@@ -1,3 +1,7 @@
+/*
+Descrição: responsavel por criar um mock de tweets
+para serem enviadoso conforme o tempo definido nos agendamentos
+*/
 package rabbitmq
 
 var Messages = []Tweet{

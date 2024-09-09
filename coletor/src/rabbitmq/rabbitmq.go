@@ -1,3 +1,6 @@
+/*
+Descrição: classes de comunicação com o rabbitmq
+*/
 package rabbitmq
 
 import (

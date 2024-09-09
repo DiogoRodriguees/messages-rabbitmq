@@ -1,5 +1,6 @@
 /* 
- * 
+ * Descrição: cria comunicação com rabbitmq;
+ * declara exchanges que serão usadas; inicia o consumidor
  */
 
 import com.rabbitmq.client.Channel;

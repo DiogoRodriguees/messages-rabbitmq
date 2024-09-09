@@ -1,3 +1,7 @@
+/* 
+ * Descrição: responsavel pelo controle de conexão e
+ * manipulação das exchanges
+ */
 package rabbitmq;
 
 import java.io.IOException;

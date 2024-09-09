@@ -1,3 +1,7 @@
+/* 
+ * Descrição: responsavel por estabelecer comunicação 
+ * com rabbitmq
+ */
 package rabbitmq;
 
 import java.io.IOException;
